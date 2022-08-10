@@ -1,0 +1,45 @@
+[
+    {
+        "type": "dir",
+        "name": "My Photos",
+        "id": "aa97148a30968fed918f1514c65f072f62edbef5",
+        "mtime": 1659897128,
+        "permission": "rw"
+    },
+    {
+        "modifier_email": "test@seafile.com",
+        "size": 8845447,
+        "type": "file",
+        "name": "test.jpg",
+        "id": "c28444ded55eacbafae5c26e208defd2f1a6e68f",
+        "mtime": 1458476496,
+        "permission": "rw",
+        "modifier_contact_email": "test@seafile.com",
+        "modifier_name": "Test Seafile",
+        "starred": false
+    },
+    {
+        "modifier_email": "test@seafile.com",
+        "size": 2345,
+        "type": "file",
+        "name": "test.docx",
+        "id": "12312344ded55eacbafae5c6e208defd2f1a6e68f",
+        "mtime": 1458476496,
+        "permission": "rw",
+        "modifier_contact_email": "test@seafile.com",
+        "modifier_name": "Test Seafile",
+        "starred": false
+    },
+    {
+        "modifier_email": "test@seafile.com",
+        "size": 2345,
+        "type": "file",
+        "name": "test",
+        "id": "12312344ded55eacbafae5c6e999defd2f1a6e68f",
+        "mtime": 1458476496,
+        "permission": "rw",
+        "modifier_contact_email": "test@seafile.com",
+        "modifier_name": "Test Seafile",
+        "starred": false
+    }
+]

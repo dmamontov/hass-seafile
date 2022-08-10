@@ -1,0 +1,45 @@
+{
+  "title": "Seafile",
+  "config": {
+    "error": {
+      "request.error": "İstek tamamlanamadı. Verilerin doğru olup olmadığını kontrol edin.",
+      "connection.error": "Bağlantı yok. Verilerin doğru olup olmadığını kontrol edin."
+    },
+    "step": {
+      "user": {
+        "title": "Seafile ayarları",
+        "description": "Seafile için url, kullanıcı adı ve şifre girin",
+        "data": {
+          "url": "Url",
+          "username": "Username",
+          "password": "Password",
+          "scan_interval": "Saniye cinsinden tarama aralığı [PRO]",
+          "timeout": "İsteklerin saniye cinsinden zaman aşımı [PRO]"
+        }
+      }
+    }
+  },
+  "options": {
+    "error": {
+      "request.error": "İstek tamamlanamadı. Verilerin doğru olup olmadığını kontrol edin.",
+      "connection.error": "Bağlantı yok. Verilerin doğru olup olmadığını kontrol edin."
+    },
+    "step": {
+      "init": {
+        "title": "Seafile ayarları",
+        "description": "Seafile için parolayı girin",
+        "data": {
+          "password": "Password",
+          "scan_interval": "Saniye cinsinden tarama aralığı [PRO]",
+          "timeout": "İsteklerin saniye cinsinden zaman aşımı [PRO]"
+        }
+      }
+    }
+  },
+  "system_health": {
+    "info": {
+      "version": "Sürümü",
+      "component_version": "Bileşen sürümü"
+    }
+  }
+}

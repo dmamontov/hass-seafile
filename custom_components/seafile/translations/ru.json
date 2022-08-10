@@ -1,0 +1,45 @@
+{
+  "title": "Seafile",
+  "config": {
+    "error": {
+      "request.error": "Не удалось выполнить запрос. Проверьте правильность данных.",
+      "connection.error": "Нет подключения. Проверьте правильность данных."
+    },
+    "step": {
+      "user": {
+        "title": "Настройки Seafile",
+        "description": "Введите url, имя пользователя и пароль от вашего Seafile",
+        "data": {
+          "url": "Url",
+          "username": "Имя пользователя",
+          "password": "Пароль",
+          "scan_interval": "Интервал сканирования в секундах [PRO]",
+          "timeout": "Время ожидания запросов в секундах [PRO]"
+        }
+      }
+    }
+  },
+  "options": {
+    "error": {
+      "request.error": "Не удалось выполнить запрос. Проверьте правильность данных.",
+      "connection.error": "Нет подключения. Проверьте правильность данных."
+    },
+    "step": {
+      "init": {
+        "title": "Настройки Seafile",
+        "description": "Введите пароль от вашего Seafile",
+        "data": {
+          "password": "Пароль",
+          "scan_interval": "Интервал сканирования в секундах [PRO]",
+          "timeout": "Время ожидания запросов в секундах [PRO]"
+        }
+      }
+    }
+  },
+  "system_health": {
+    "info": {
+      "version": "Версия",
+      "component_version": "Версия компонента"
+    }
+  }
+}

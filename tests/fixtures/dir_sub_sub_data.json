@@ -1,0 +1,14 @@
+[
+    {
+        "modifier_email": "test@seafile.com",
+        "size": 2506491,
+        "type": "file",
+        "name": "test.flv",
+        "id": "25825e5c0b69f9f6c1cf4328982adb993dd8ce24",
+        "mtime": 1650100056,
+        "permission": "rw",
+        "modifier_contact_email": "test@seafile.com",
+        "modifier_name": "Test Seafile",
+        "starred": false
+    }
+]

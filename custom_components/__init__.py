@@ -1,0 +1,1 @@
+"""Seafile custom integration."""

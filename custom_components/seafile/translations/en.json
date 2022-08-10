@@ -1,0 +1,45 @@
+{
+  "title": "Seafile",
+  "config": {
+    "error": {
+      "request.error": "Failed to complete the request. Check if the data is correct.",
+      "connection.error": "There is no connection. Check if the data is correct."
+    },
+    "step": {
+      "user": {
+        "title": "Seafile settings",
+        "description": "Enter the url, username and password of your Seafile",
+        "data": {
+          "url": "Url",
+          "username": "Username",
+          "password": "Password",
+          "scan_interval": "Scan interval in seconds [PRO]",
+          "timeout": "Timeout of requests in seconds [PRO]"
+        }
+      }
+    }
+  },
+  "options": {
+    "error": {
+      "request.error": "Failed to complete the request. Check if the data is correct.",
+      "connection.error": "There is no connection. Check if the data is correct."
+    },
+    "step": {
+      "init": {
+        "title": "Seafile settings",
+        "description": "Enter the password of your Seafile",
+        "data": {
+          "password": "Password",
+          "scan_interval": "Scan interval in seconds [PRO]",
+          "timeout": "Timeout of requests in seconds [PRO]"
+        }
+      }
+    }
+  },
+  "system_health": {
+    "info": {
+      "version": "Version",
+      "component_version": "Component version"
+    }
+  }
+}

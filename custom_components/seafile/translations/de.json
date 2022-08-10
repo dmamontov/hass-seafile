@@ -1,0 +1,45 @@
+{
+  "title": "Seafile",
+  "config": {
+    "error": {
+      "request.error": "Anfrage konnte nicht abgeschlossen werden. Überprüfen Sie, ob die Daten korrekt sind.",
+      "connection.error": "Es besteht keine Verbindung. Überprüfen Sie, ob die Daten korrekt sind."
+    },
+    "step": {
+      "user": {
+        "title": "Seafile-Einstellungen",
+        "description": "Geben Sie URL, Benutzername und Passwort für Ihr Seafile ein",
+        "data": {
+          "url": "Url",
+          "username": "Username",
+          "password": "Password",
+          "scan_interval": "Scan-Intervall in Sekunden [PRO]",
+          "timeout": "Timeout von Anfragen in Sekunden [PRO]"
+        }
+      }
+    }
+  },
+  "options": {
+    "error": {
+      "request.error": "Anfrage konnte nicht abgeschlossen werden. Überprüfen Sie, ob die Daten korrekt sind.",
+      "connection.error": "Es besteht keine Verbindung. Überprüfen Sie, ob die Daten korrekt sind."
+    },
+    "step": {
+      "init": {
+        "title": "Seafile-Einstellungen",
+        "description": "Geben Sie das Passwort für Ihr Seafile ein",
+        "data": {
+          "password": "Password",
+          "scan_interval": "Scan-Intervall in Sekunden [PRO]",
+          "timeout": "Timeout von Anfragen in Sekunden [PRO]"
+        }
+      }
+    }
+  },
+  "system_health": {
+    "info": {
+      "version": "Version",
+      "component_version": "Komponentenversion"
+    }
+  }
+}

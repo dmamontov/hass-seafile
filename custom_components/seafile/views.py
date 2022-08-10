@@ -102,7 +102,7 @@ class ThumbnailProxyView(HomeAssistantView):
 
         headers: LooseHeaders = {
             CACHE_CONTROL: "public, max-age=31622400",
-            ETAG: md5(thumbnail).hexdigest()
+            ETAG: md5(thumbnail).hexdigest(),
         }
 
         return web.Response(body=thumbnail, content_type=mime, headers=headers)

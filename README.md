@@ -19,7 +19,7 @@ The component adds the ability to view `media files` directly from HASS and also
 - [Preview](https://github.com/dmamontov/hass-seafile/wiki/Preview)
 
 ## Install
-The easiest way to set up integration with Seafile is to use [HACS](https://hacs.xyz/). Install [HACS](https://hacs.xyz/) first if you don't already have it. After installation, you need to add this repository as a custom one, and then you can find this integration in the [HACS](https://hacs.xyz/)store in the integration section.
+The easiest way to set up integration with Seafile is to use [HACS](https://hacs.xyz/). Install [HACS](https://hacs.xyz/) first if you don't already have it. After installation, you need to add this repository as a custom one, and then you can find this integration in the [HACS](https://hacs.xyz/) store in the integration section.
 
 Alternatively, you can install it manually. Just copy and paste the content of the hass-seafile/custom_components folder in your config/custom_components directory. As example, you will get the sensor.py file in the following path: /config/custom_components/seafile/sensor.py. The disadvantage of a manual installation is that you won’t be notified about updates.
 

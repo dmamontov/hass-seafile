@@ -35,12 +35,3 @@ To connect, enter the ip address and port. And also if you use basic auth, enter
 ## Preview
 
 ![](images/media.png)
-
-Below is a list of all entities that the component creates:
-
-| Entity ID                                 | Name        | Enabled | Description                             |
-|-------------------------------------------|-------------|:-------:|-----------------------------------------|
-| binary_sensor.seafile_{username}_state    | State       |    +    | Seafile connection status               |
-| sensor.seafile_{username}_space_usage     | Space usage |    +    | How much space the user takes           |
-| sensor.seafile_{username}_space_total     | Space total |    +    | How much space is available to the user |
-| sensor.seafile_{username}_{repo_id}_total | Used        |    +    | How much space does the library take up |

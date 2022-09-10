@@ -202,37 +202,6 @@ async def test_media_source(hass: HomeAssistant) -> None:
             "title": "My Photos",
         }
 
-        media = await media_source.async_browse_media(
-            hass,
-            f"{const.URI_SCHEME}{DOMAIN}/{config_entry.entry_id}/704f23aa-e086-40a3-977e-7a07c798971d/My Photos/Camera",
-        )
-
-        assert media.as_dict() == {
-            "can_expand": True,
-            "can_play": False,
-            "children": [
-                {
-                    "can_expand": False,
-                    "can_play": True,
-                    "children_media_class": None,
-                    "media_class": "video",
-                    "media_content_id": f"media-source://{DOMAIN}/{config_entry.entry_id}/704f23aa-e086-40a3-977e-7a07c798971d/My "
-                    "Photos/Camera/test.flv",
-                    "media_content_type": "video",
-                    "thumbnail": None,
-                    "title": "test.flv",
-                }
-            ],
-            "children_media_class": "directory",
-            "media_class": "directory",
-            "media_content_id": f"media-source://{DOMAIN}/{config_entry.entry_id}/704f23aa-e086-40a3-977e-7a07c798971d/My "
-            "Photos/Camera/Camera",
-            "media_content_type": "",
-            "not_shown": 0,
-            "thumbnail": None,
-            "title": "Camera",
-        }
-
 
 async def test_media_source_entry_error(hass: HomeAssistant) -> None:
     """Test media source entry error.

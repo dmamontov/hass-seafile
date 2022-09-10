@@ -18,6 +18,9 @@ PLATFORMS: Final = [
 
 THUMBNAIL_SIZE: Final = 256
 
+MIMETYPE_HEIC: Final = "image/heic"
+MIMETYPE_JPEG: Final = "image/jpeg"
+
 """Diagnostic const"""
 DIAGNOSTIC_DATE_TIME: Final = "date_time"
 DIAGNOSTIC_MESSAGE: Final = "message"

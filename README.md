@@ -14,6 +14,7 @@ The component adds the ability to view `media files` directly from HASS and also
 
 - [Install](https://github.com/dmamontov/hass-seafile/wiki/Install)
 - [Config](https://github.com/dmamontov/hass-seafile/wiki/Config)
+- [Conversion](https://github.com/dmamontov/hass-seafile/wiki/Conversion)
 - [Entities](https://github.com/dmamontov/hass-seafile/wiki/Entities)
 - [Diagnostics](https://github.com/dmamontov/hass-seafile/wiki/Diagnostics)
 - [Preview](https://github.com/dmamontov/hass-seafile/wiki/Preview)

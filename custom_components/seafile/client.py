@@ -65,17 +65,22 @@ class SeafileClient:
         self.diagnostics: dict[str, Any] = {}
 
     async def request(
-        self, path: str, body: dict | None = None, string_response: bool = False
+        self,
+        path: str,
+        body: dict | None = None,
+        string_response: bool = False,
+        full_path: bool = False,
     ) -> dict | list | str | bytes:
         """Request method.
 
         :param path: str: api path
         :param body: dict | None: api body
         :param string_response: bool: Is string response
+        :param full_path: bool: Is full path
         :return dict | list | str | bytes: dict or list or str or bytes with api data.
         """
 
-        _url: str = f"{self._url}/{path}/"
+        _url: str = path if full_path else f"{self._url}/{path}/"
 
         try:
             async with self._client as client:
@@ -187,17 +192,29 @@ class SeafileClient:
             await self.request(f"repos/{repo_id}/dir", {"p": path} if path else None)
         )
 
-    async def file(self, repo_id: str, path: str) -> str:
+    async def file(
+        self, repo_id: str, path: str, as_bytes: bool = False
+    ) -> str | bytes:
         """Get file
 
         :param repo_id: str
         :param path: str
-        :return str: Response str
+        :param as_bytes: bool
+        :return str | bytes: Response str | bytes
         """
 
-        return str(
+        url: str = str(
             await self.request(f"repos/{repo_id}/file", {"p": path, "reuse": 1}, True)
         )
+
+        if as_bytes:  # pragma: no cover
+            return bytes(
+                await self.request(  # type: ignore
+                    url.strip('"'), string_response=True, full_path=True
+                )
+            )
+
+        return url
 
     async def thumbnail(
         self, repo_id: str, path: str, size: int = THUMBNAIL_SIZE

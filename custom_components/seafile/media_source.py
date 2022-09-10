@@ -249,10 +249,10 @@ class SeafileMediaSource(MediaSource):
         :return BrowseMediaSource
         """
 
-        path: list = identifier.split("/")
-
         thumbnail: str | None = None
         if mime == MEDIA_CLASS_IMAGE:
+            path: list = identifier.split("/")
+
             thumbnail = async_generate_thumbnail_url(
                 _get_host(self.hass),
                 path[0],

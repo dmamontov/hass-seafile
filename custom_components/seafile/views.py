@@ -7,18 +7,22 @@ from __future__ import annotations
 import io
 import logging
 import mimetypes
+import shlex
+import subprocess
 from hashlib import md5
 from http import HTTPStatus
 from typing import Any
 
 from aiohttp import web
 from aiohttp.hdrs import CACHE_CONTROL, ETAG
+from homeassistant.components.ffmpeg import FFmpegManager, get_ffmpeg_manager
 from homeassistant.components.http import HomeAssistantView
+from homeassistant.components.media_player.const import MEDIA_CLASS_VIDEO
 from homeassistant.core import HomeAssistant, callback
 
 from .const import DOMAIN, MIMETYPE_HEIC, MIMETYPE_JPEG, THUMBNAIL_SIZE
 from .exceptions import SeafileError
-from .helper import decode_path, encode_path, is_valid_uuid
+from .helper import decode_path, encode_path, get_short_mime, is_valid_uuid
 from .updater import SeafileUpdater, async_get_updater
 
 _LOGGER = logging.getLogger(__name__)
@@ -96,25 +100,31 @@ class ThumbnailProxyView(HomeAssistantView):
             return _404(f"Unable to find library with id: {repo_id}")
 
         mime, _ = mimetypes.guess_type(file_path)
+        short_mime = get_short_mime(mime)
+
         thumbnail: bytes = b""
 
-        if mime == MIMETYPE_HEIC:
-            try:
+        try:
+            if mime == MIMETYPE_HEIC:
                 file: bytes = await updater.client.file(  # type: ignore
                     repo_id, decode_path(file_path), True
                 )
 
                 mime = MIMETYPE_JPEG
                 thumbnail = await _convert_heic(file, size)
-            except (SeafileError, ValueError, ModuleNotFoundError):  # pragma: no cover
-                return _404("Thumbnail not found")
-        else:
-            try:
+            elif short_mime == MEDIA_CLASS_VIDEO:  # pragma: no cover
+                url: str = await updater.client.file(  # type: ignore
+                    repo_id, decode_path(file_path)
+                )
+
+                mime = MIMETYPE_JPEG
+                thumbnail = await _convert_video(self.hass, url.strip('"'), size)
+            else:
                 thumbnail = await updater.client.thumbnail(
                     repo_id, decode_path(file_path), size
                 )
-            except SeafileError:
-                return _404("Thumbnail not found")
+        except (SeafileError, ValueError, ModuleNotFoundError):
+            return _404("Thumbnail not found")
 
         return web.Response(
             body=thumbnail,
@@ -162,3 +172,37 @@ async def _convert_heic(data: bytes, size: int | None = None) -> bytes:
     image.save(buffer, format="jpeg")
 
     return buffer.getvalue()
+
+
+async def _convert_video(
+    hass: HomeAssistant, url: str, size: int
+) -> bytes:  # pragma: no cover
+    """Convert video
+
+    :param hass: HomeAssistant
+    :param url: str
+    :param size: int
+    :return bytes
+    """
+
+    manager: FFmpegManager = get_ffmpeg_manager(hass)
+
+    def _convert(command: str) -> bytes:
+        """Run convert
+
+        :param command: str
+        :return bytes
+        """
+
+        return subprocess.run(
+            shlex.split(command), check=False, shell=False, stdout=subprocess.PIPE
+        ).stdout
+
+    return await hass.async_add_executor_job(
+        _convert,
+        str(
+            f"{manager.binary} -loglevel quiet -i "
+            f"{url} -frames:v 1 "
+            f"-vf scale=-2:{size} -q:v 3 -f image2 -"
+        ),
+    )

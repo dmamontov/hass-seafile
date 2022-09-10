@@ -11,7 +11,6 @@ from operator import itemgetter
 from homeassistant.components.media_player.const import (
     MEDIA_CLASS_APP,
     MEDIA_CLASS_DIRECTORY,
-    MEDIA_CLASS_IMAGE,
 )
 from homeassistant.components.media_source.const import (
     MEDIA_CLASS_MAP,
@@ -251,22 +250,18 @@ class SeafileMediaSource(MediaSource):
 
         path: list = identifier.split("/")
 
-        thumbnail: str | None = None
-        if mime == MEDIA_CLASS_IMAGE:
-            thumbnail = async_generate_thumbnail_url(
-                _get_host(self.hass),
-                path[0],
-                path[1],
-                f"{'/'.join(path[2:])}/{name}",
-                THUMBNAIL_SIZE,
-            )
-
         return BrowseMediaSource(
             domain=DOMAIN,
             identifier=f"{identifier}/{name}",
             media_class=MEDIA_CLASS_MAP[mime],
             media_content_type=MEDIA_CLASS_MAP[mime],
-            thumbnail=thumbnail,
+            thumbnail=async_generate_thumbnail_url(
+                _get_host(self.hass),
+                path[0],
+                path[1],
+                f"{'/'.join(path[2:])}/{name}",
+                THUMBNAIL_SIZE,
+            ),
             title=name,
             can_play=True,
             can_expand=False,

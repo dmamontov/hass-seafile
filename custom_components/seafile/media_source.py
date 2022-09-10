@@ -33,6 +33,8 @@ from .const import (
     ATTR_REPOSITORY_NAME,
     ATTR_STATE,
     DOMAIN,
+    MIMETYPE_HEIC,
+    MIMETYPE_JPEG,
     THUMBNAIL_SIZE,
 )
 from .exceptions import SeafileError
@@ -84,14 +86,22 @@ class SeafileMediaSource(MediaSource):
         except ValueError as _e:
             raise Unresolvable(f"Unable to find entry with id: {path[0]}") from _e
 
-        try:
-            url: str = await updater.client.file(path[1], f"/{'/'.join(path[2:])}")
-        except SeafileError as _e:
-            raise Unresolvable(
-                f"Could not resolve media item: {item.identifier}"
-            ) from _e
-
         mime, _ = mimetypes.guess_type(path[-1])
+
+        url: str = ""
+
+        if mime == MIMETYPE_HEIC:  # pragma: no cover
+            url = async_generate_thumbnail_url(
+                _get_host(self.hass), path[0], path[1], f"/{'/'.join(path[2:])}", 0
+            )
+            mime = MIMETYPE_JPEG
+        else:
+            try:
+                url = await updater.client.file(path[1], f"/{'/'.join(path[2:])}")  # type: ignore
+            except SeafileError as _e:
+                raise Unresolvable(
+                    f"Could not resolve media item: {item.identifier}"
+                ) from _e
 
         return PlayMedia(url=url.strip('"'), mime_type=mime)
 
@@ -243,13 +253,8 @@ class SeafileMediaSource(MediaSource):
 
         thumbnail: str | None = None
         if mime == MEDIA_CLASS_IMAGE:
-            # Temporary solution pending
-            host: str = get_url(self.hass)
-            with contextlib.suppress(NoURLAvailableError):
-                host = get_url(self.hass, require_current_request=True)
-
             thumbnail = async_generate_thumbnail_url(
-                host,
+                _get_host(self.hass),
                 path[0],
                 path[1],
                 f"{'/'.join(path[2:])}/{name}",
@@ -317,3 +322,16 @@ class SeafileMediaSource(MediaSource):
             )
 
         return sources
+
+
+def _get_host(hass: HomeAssistant) -> str:
+    """Get host from HomeAssistant
+
+    :param hass: HomeAssistant
+    :return str
+    """
+    host: str = get_url(hass)
+    with contextlib.suppress(NoURLAvailableError):
+        host = get_url(hass, require_current_request=True)
+
+    return host

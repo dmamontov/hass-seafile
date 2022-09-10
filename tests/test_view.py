@@ -114,6 +114,51 @@ async def test_thumbnail_with_path(
         assert response.content_type == "image/jpeg"
 
 
+async def test_thumbnail_with_converted_heic(
+    hass: HomeAssistant, hass_client: mock_aiohttp_client
+) -> None:
+    """Test thumbnail.
+
+    :param hass: HomeAssistant
+    :param hass_client: mock_aiohttp_client
+    """
+
+    with patch("custom_components.seafile.updater.SeafileClient") as mock_client, patch(
+        "custom_components.seafile.updater.async_dispatcher_send"
+    ):
+        await async_mock_client(mock_client)
+
+        mock_client.return_value.file = AsyncMock(
+            return_value=load_image_fixture("converted.heic")
+        )
+
+        _, config_entry = await async_setup(hass)
+
+        assert await hass.config_entries.async_setup(config_entry.entry_id)
+        await hass.async_block_till_done()
+
+        async_fire_time_changed(
+            hass, utcnow() + timedelta(seconds=DEFAULT_SCAN_INTERVAL + 1)
+        )
+        await hass.async_block_till_done()
+
+        url: str = async_generate_thumbnail_url(
+            get_url(hass),
+            config_entry.entry_id,
+            "704f23aa-e086-40a3-977e-7a07c798971d",
+            "images/test.heic",
+            THUMBNAIL_SIZE,
+        )
+
+        http_client = await hass_client()
+        response = cast(
+            ClientResponse, await http_client.get(url.replace(get_url(hass), ""))
+        )
+
+        assert response.status == 200
+        assert response.content_type == "image/jpeg"
+
+
 async def test_thumbnail_error(
     hass: HomeAssistant, hass_client: mock_aiohttp_client
 ) -> None:

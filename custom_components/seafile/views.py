@@ -1,7 +1,10 @@
 """"Seafile view."""
 
+# pylint: disable=import-outside-toplevel
+
 from __future__ import annotations
 
+import io
 import logging
 import mimetypes
 from hashlib import md5
@@ -10,11 +13,10 @@ from typing import Any
 
 from aiohttp import web
 from aiohttp.hdrs import CACHE_CONTROL, ETAG
-from aiohttp.typedefs import LooseHeaders
 from homeassistant.components.http import HomeAssistantView
 from homeassistant.core import HomeAssistant, callback
 
-from .const import DOMAIN, THUMBNAIL_SIZE
+from .const import DOMAIN, MIMETYPE_HEIC, MIMETYPE_JPEG, THUMBNAIL_SIZE
 from .exceptions import SeafileError
 from .helper import decode_path, encode_path, is_valid_uuid
 from .updater import SeafileUpdater, async_get_updater
@@ -64,7 +66,7 @@ class ThumbnailProxyView(HomeAssistantView):
         self.hass = hass
         self.data = hass.data[DOMAIN]
 
-    # pylint: disable=too-many-arguments
+    # pylint: disable=too-many-arguments,too-many-locals
     async def get(
         self,
         request: web.Request,
@@ -83,6 +85,8 @@ class ThumbnailProxyView(HomeAssistantView):
         :return web.Response
         """
 
+        size = int(size)  # sourcery skip
+
         try:
             updater: SeafileUpdater = async_get_updater(self.hass, entry_id)
         except ValueError:
@@ -91,23 +95,70 @@ class ThumbnailProxyView(HomeAssistantView):
         if not is_valid_uuid(repo_id):
             return _404(f"Unable to find library with id: {repo_id}")
 
-        try:
-            thumbnail: bytes = await updater.client.thumbnail(
-                repo_id, decode_path(file_path), size
-            )
-        except SeafileError:
-            return _404("Thumbnail not found")
-
         mime, _ = mimetypes.guess_type(file_path)
+        thumbnail: bytes = b""
 
-        headers: LooseHeaders = {
-            CACHE_CONTROL: "public, max-age=31622400",
-            ETAG: md5(thumbnail).hexdigest(),
-        }
+        if mime == MIMETYPE_HEIC:
+            try:
+                file: bytes = await updater.client.file(  # type: ignore
+                    repo_id, decode_path(file_path), True
+                )
 
-        return web.Response(body=thumbnail, content_type=mime, headers=headers)
+                mime = MIMETYPE_JPEG
+                thumbnail = await _convert_heic(file, size)
+            except (SeafileError, ValueError, ModuleNotFoundError):  # pragma: no cover
+                return _404("Thumbnail not found")
+        else:
+            try:
+                thumbnail = await updater.client.thumbnail(
+                    repo_id, decode_path(file_path), size
+                )
+            except SeafileError:
+                return _404("Thumbnail not found")
+
+        return web.Response(
+            body=thumbnail,
+            content_type=mime,
+            headers={
+                CACHE_CONTROL: "public, max-age=31622400",
+                ETAG: md5(thumbnail).hexdigest(),
+            },
+        )
 
 
 @callback
 def _404(message: Any) -> web.Response:
+    """404
+
+    :param message: Any
+    :return web.Response
+    """
+
     return web.Response(body=message, status=HTTPStatus.NOT_FOUND)
+
+
+async def _convert_heic(data: bytes, size: int | None = None) -> bytes:
+    """Convert heic
+
+    :param data: bytes
+    :param size: int | None
+    :return bytes
+    """
+
+    import PIL.Image
+    import pyheif
+
+    heif_file: pyheif.HeifFile = pyheif.read(data)
+
+    image: PIL.Image = PIL.Image.frombytes(
+        mode=heif_file.mode, size=heif_file.size, data=heif_file.data
+    )
+
+    if size and size > 0:
+        image.thumbnail((size, size))
+
+    buffer = io.BytesIO()
+
+    image.save(buffer, format="jpeg")
+
+    return buffer.getvalue()

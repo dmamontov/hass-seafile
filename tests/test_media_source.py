@@ -42,6 +42,7 @@ async def setup_media_source(hass) -> None:
     assert await async_setup_component(hass, "media_source", {})
 
 
+@pytest.mark.asyncio
 async def test_media_source(hass: HomeAssistant) -> None:
     """Test media source.
 
@@ -203,6 +204,7 @@ async def test_media_source(hass: HomeAssistant) -> None:
         }
 
 
+@pytest.mark.asyncio
 async def test_media_source_entry_error(hass: HomeAssistant) -> None:
     """Test media source entry error.
 
@@ -233,6 +235,7 @@ async def test_media_source_entry_error(hass: HomeAssistant) -> None:
         assert str(error.value) == "Unable to find entry with id: error"
 
 
+@pytest.mark.asyncio
 async def test_media_source_uuid_error(hass: HomeAssistant) -> None:
     """Test media source uuid error.
 
@@ -263,6 +266,7 @@ async def test_media_source_uuid_error(hass: HomeAssistant) -> None:
         assert str(error.value) == "Unable to find library with id: error"
 
 
+@pytest.mark.asyncio
 async def test_media_source_updater_error(hass: HomeAssistant) -> None:
     """Test media source updater error.
 
@@ -293,6 +297,7 @@ async def test_media_source_updater_error(hass: HomeAssistant) -> None:
         assert str(error.value) == "Unable to find entry with id: error"
 
 
+@pytest.mark.asyncio
 async def test_media_source_directories_error(hass: HomeAssistant) -> None:
     """Test media source directories error.
 
@@ -326,6 +331,7 @@ async def test_media_source_directories_error(hass: HomeAssistant) -> None:
         assert str(error.value) == "Unable to find path: /"
 
 
+@pytest.mark.asyncio
 async def test_media_source_play(hass: HomeAssistant) -> None:
     """Test media source play.
 
@@ -357,6 +363,7 @@ async def test_media_source_play(hass: HomeAssistant) -> None:
         )
 
 
+@pytest.mark.asyncio
 async def test_media_source_play_uuid_error(hass: HomeAssistant) -> None:
     """Test media source play uuid error.
 
@@ -388,6 +395,7 @@ async def test_media_source_play_uuid_error(hass: HomeAssistant) -> None:
         assert str(error.value) == "Unable to find library with id: error"
 
 
+@pytest.mark.asyncio
 async def test_media_source_play_entry_error(hass: HomeAssistant) -> None:
     """Test media source play entry error.
 
@@ -419,6 +427,7 @@ async def test_media_source_play_entry_error(hass: HomeAssistant) -> None:
         assert str(error.value) == "Unable to find entry with id: error"
 
 
+@pytest.mark.asyncio
 async def test_media_source_play_url_error(hass: HomeAssistant) -> None:
     """Test media source play url error.
 

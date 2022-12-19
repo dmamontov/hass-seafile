@@ -67,6 +67,7 @@ async def async_setup(
     config_entry.add_to_hass(hass)
 
     await setup.async_setup_component(hass, "http", {})
+    await setup.async_setup_component(hass, "media_source", {})
 
     updater: SeafileUpdater = SeafileUpdater(
         hass,

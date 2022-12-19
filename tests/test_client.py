@@ -31,6 +31,7 @@ from tests.setup import (
 _LOGGER = logging.getLogger(__name__)
 
 
+@pytest.mark.asyncio
 async def test_login(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """Login test"""
 
@@ -50,6 +51,7 @@ async def test_login(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     assert request.method == "POST"
 
 
+@pytest.mark.asyncio
 async def test_login_request_error(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """Login request error"""
 
@@ -63,6 +65,7 @@ async def test_login_request_error(hass: HomeAssistant, httpx_mock: HTTPXMock) -
         await client.login()
 
 
+@pytest.mark.asyncio
 async def test_login_no_field_error(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """Login no field error"""
 
@@ -83,6 +86,7 @@ async def test_login_no_field_error(hass: HomeAssistant, httpx_mock: HTTPXMock) 
     )
 
 
+@pytest.mark.asyncio
 async def test_login_with_field_error(
     hass: HomeAssistant, httpx_mock: HTTPXMock
 ) -> None:
@@ -102,6 +106,7 @@ async def test_login_with_field_error(
     assert str(error.value) == "password: This field is required."
 
 
+@pytest.mark.asyncio
 async def test_login_incorrect_method_error(
     hass: HomeAssistant, httpx_mock: HTTPXMock
 ) -> None:
@@ -121,6 +126,7 @@ async def test_login_incorrect_method_error(
     assert str(error.value) == 'Method "GET" not allowed.'
 
 
+@pytest.mark.asyncio
 async def test_login_empty_response_error(
     hass: HomeAssistant, httpx_mock: HTTPXMock
 ) -> None:
@@ -140,6 +146,7 @@ async def test_login_empty_response_error(
     assert str(error.value) == "Request error."
 
 
+@pytest.mark.asyncio
 async def test_login_empty_field_error_error(
     hass: HomeAssistant, httpx_mock: HTTPXMock
 ) -> None:
@@ -159,6 +166,7 @@ async def test_login_empty_field_error_error(
     assert str(error.value) == "Request error."
 
 
+@pytest.mark.asyncio
 async def test_account(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """Account test"""
 
@@ -179,6 +187,7 @@ async def test_account(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     assert request.method == "GET"
 
 
+@pytest.mark.asyncio
 async def test_error_account(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """Account error test"""
 
@@ -195,6 +204,7 @@ async def test_error_account(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None
         await client.account()
 
 
+@pytest.mark.asyncio
 async def test_request_error_account(
     hass: HomeAssistant, httpx_mock: HTTPXMock
 ) -> None:
@@ -215,6 +225,7 @@ async def test_request_error_account(
         await client.account()
 
 
+@pytest.mark.asyncio
 async def test_libraries(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """Libraries test"""
 
@@ -235,6 +246,7 @@ async def test_libraries(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     assert request.method == "GET"
 
 
+@pytest.mark.asyncio
 async def test_error_libraries(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """Libraries error test"""
 
@@ -251,6 +263,7 @@ async def test_error_libraries(hass: HomeAssistant, httpx_mock: HTTPXMock) -> No
         await client.libraries()
 
 
+@pytest.mark.asyncio
 async def test_request_error_libraries(
     hass: HomeAssistant, httpx_mock: HTTPXMock
 ) -> None:
@@ -271,6 +284,7 @@ async def test_request_error_libraries(
         await client.libraries()
 
 
+@pytest.mark.asyncio
 async def test_server(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """Server test"""
 
@@ -291,6 +305,7 @@ async def test_server(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     assert request.method == "GET"
 
 
+@pytest.mark.asyncio
 async def test_error_server(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """Server error test"""
 
@@ -307,6 +322,7 @@ async def test_error_server(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
         await client.server()
 
 
+@pytest.mark.asyncio
 async def test_request_error_server(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """Server request error test"""
 
@@ -325,6 +341,7 @@ async def test_request_error_server(hass: HomeAssistant, httpx_mock: HTTPXMock) 
         await client.server()
 
 
+@pytest.mark.asyncio
 async def test_directories(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """Directories test"""
 
@@ -347,6 +364,7 @@ async def test_directories(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     assert request.method == "GET"
 
 
+@pytest.mark.asyncio
 async def test_error_directories(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """Directories error test"""
 
@@ -363,6 +381,7 @@ async def test_error_directories(hass: HomeAssistant, httpx_mock: HTTPXMock) -> 
         await client.directories("test")
 
 
+@pytest.mark.asyncio
 async def test_request_error_directories(
     hass: HomeAssistant, httpx_mock: HTTPXMock
 ) -> None:
@@ -383,6 +402,7 @@ async def test_request_error_directories(
         await client.directories("test")
 
 
+@pytest.mark.asyncio
 async def test_file(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """File test"""
 
@@ -403,6 +423,7 @@ async def test_file(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     assert request.method == "GET"
 
 
+@pytest.mark.asyncio
 async def test_error_file(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """File error test"""
 
@@ -419,6 +440,7 @@ async def test_error_file(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
         await client.file("test", "/")
 
 
+@pytest.mark.asyncio
 async def test_request_error_file(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """File request error test"""
 
@@ -437,6 +459,7 @@ async def test_request_error_file(hass: HomeAssistant, httpx_mock: HTTPXMock) ->
         await client.file("test", "/")
 
 
+@pytest.mark.asyncio
 async def test_thumbnail(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """Thumbnail test"""
 
@@ -463,6 +486,7 @@ async def test_thumbnail(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     assert request.method == "GET"
 
 
+@pytest.mark.asyncio
 async def test_thumbnail_with_encode(
     hass: HomeAssistant, httpx_mock: HTTPXMock
 ) -> None:
@@ -491,6 +515,7 @@ async def test_thumbnail_with_encode(
     assert request.method == "GET"
 
 
+@pytest.mark.asyncio
 async def test_error_thumbnail(hass: HomeAssistant, httpx_mock: HTTPXMock) -> None:
     """Thumbnail error test"""
 
@@ -507,6 +532,7 @@ async def test_error_thumbnail(hass: HomeAssistant, httpx_mock: HTTPXMock) -> No
         await client.thumbnail("test", "/")
 
 
+@pytest.mark.asyncio
 async def test_request_error_thumbnail(
     hass: HomeAssistant, httpx_mock: HTTPXMock
 ) -> None:

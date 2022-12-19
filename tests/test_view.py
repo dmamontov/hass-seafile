@@ -32,6 +32,7 @@ def auto_enable_custom_integrations(enable_custom_integrations):
     yield
 
 
+@pytest.mark.asyncio
 async def test_thumbnail(hass: HomeAssistant, hass_client: mock_aiohttp_client) -> None:
     """Test thumbnail.
 
@@ -72,6 +73,7 @@ async def test_thumbnail(hass: HomeAssistant, hass_client: mock_aiohttp_client) 
         assert response.content_type == "image/jpeg"
 
 
+@pytest.mark.asyncio
 async def test_thumbnail_with_path(
     hass: HomeAssistant, hass_client: mock_aiohttp_client
 ) -> None:
@@ -114,6 +116,7 @@ async def test_thumbnail_with_path(
         assert response.content_type == "image/jpeg"
 
 
+@pytest.mark.asyncio
 async def test_thumbnail_with_converted_heic(
     hass: HomeAssistant, hass_client: mock_aiohttp_client
 ) -> None:
@@ -159,6 +162,7 @@ async def test_thumbnail_with_converted_heic(
         assert response.content_type == "image/jpeg"
 
 
+@pytest.mark.asyncio
 async def test_thumbnail_error(
     hass: HomeAssistant, hass_client: mock_aiohttp_client
 ) -> None:
@@ -216,6 +220,7 @@ async def test_thumbnail_error(
         assert await response.content.read() == b"Unable to find library with id: error"
 
 
+@pytest.mark.asyncio
 async def test_thumbnail_api_error(
     hass: HomeAssistant, hass_client: mock_aiohttp_client
 ) -> None:

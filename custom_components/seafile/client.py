@@ -94,7 +94,6 @@ class SeafileClient:
             self._debug("Successful request", _url, response.content, path)
 
             if string_response and response.status_code < 400:
-
                 try:
                     return response.content.decode("utf-8")
                 except UnicodeDecodeError:

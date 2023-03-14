@@ -75,7 +75,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         if with_sleep:
             await asyncio.sleep(DEFAULT_SLEEP)
 
-        hass.config_entries.async_setup_platforms(entry, PLATFORMS)
+        await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
         hass.http.register_view(ThumbnailProxyView(hass))
 
     if is_new:

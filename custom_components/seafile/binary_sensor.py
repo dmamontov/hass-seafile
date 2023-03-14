@@ -65,6 +65,7 @@ async def async_setup_entry(
     async_add_entities(entities)
 
 
+# pylint: disable=too-many-ancestors
 class SeafileBinarySensor(SeafileEntity, BinarySensorEntity):
     """Seafile binary sensor entry."""
 

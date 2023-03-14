@@ -51,7 +51,7 @@ PREPARE_METHODS: Final = (
 _LOGGER = logging.getLogger(__name__)
 
 
-# pylint: disable=too-many-branches,too-many-lines,too-many-arguments
+# pylint: disable=too-many-branches,too-many-lines,too-many-arguments,too-many-ancestors
 class SeafileUpdater(DataUpdateCoordinator):
     """Seafile data updater for interaction with Seafile API."""
 

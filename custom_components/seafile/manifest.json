@@ -1,14 +1,20 @@
 {
   "domain": "seafile",
   "name": "Seafile",
-  "version": "1.1.0",
-  "documentation": "https://github.com/dmamontov/hass-seafile/wiki",
-  "issue_tracker": "https://github.com/dmamontov/hass-seafile/issues",
+  "after_dependencies": [
+    "ffmpeg"
+  ],
+  "codeowners": [
+    "@dmamontov"
+  ],
   "config_flow": true,
-  "requirements": [],
-  "dependencies": ["http"],
-  "after_dependencies": ["ffmpeg"],
-  "codeowners": ["@dmamontov"],
+  "dependencies": [
+    "http"
+  ],
+  "documentation": "https://github.com/dmamontov/hass-seafile/wiki",
   "iot_class": "local_polling",
-  "quality_scale": "platinum"
+  "issue_tracker": "https://github.com/dmamontov/hass-seafile/issues",
+  "quality_scale": "platinum",
+  "requirements": [],
+  "version": "2.0.0"
 }
